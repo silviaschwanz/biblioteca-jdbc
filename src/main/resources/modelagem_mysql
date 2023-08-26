@@ -1,0 +1,52 @@
+
+CREATE TABLE biblioteca (
+	id INT NOT NULL AUTO_INCREMENT,
+	nome VARCHAR(255) NOT NULL,
+	PRIMARY KEY (id)	
+);
+
+
+create table usuario (
+	id INT NOT NULL AUTO_INCREMENT,
+	biblioteca_id INT NOT NULL, 
+	nome VARCHAR(255) NOT NULL,
+	cpf CHAR(11) NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (biblioteca_id) REFERENCES biblioteca(id)
+	);
+	
+
+CREATE TABLE emprestimo (
+	id INT NOT NULL AUTO_INCREMENT,
+	usuario_id INT NOT NULL,
+	data_retirada DATE NOT NULL,
+	data_devolucao DATE NOT NULL,
+	finalizado BOOL NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+);
+
+CREATE TABLE livro (
+	id INT NOT NULL AUTO_INCREMENT,
+	biblioteca_id INT NOT NULL,
+	titulo VARCHAR(255) NOT NULL,
+	data_publicacao DATE,
+	isbn BIGINT NOT NULL,
+	situacao CHAR(11),
+	PRIMARY KEY (id),
+	FOREIGN KEY (biblioteca_id) REFERENCES biblioteca(id)
+);
+
+
+CREATE TABLE emprestimo_livro(
+	id INT NOT NULL AUTO_INCREMENT,
+	emprestimo_id INT NOT NULL,
+	livro_id INT NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (emprestimo_id) REFERENCES emprestimo(id),
+	FOREIGN KEY (livro_id) REFERENCES livro(id)
+);
+
+
+Para alterar coluna (adicionar coluna)
+ALTER TABLE emprestimo ADD COLUMN finalizado BOOL NOT NULL;
